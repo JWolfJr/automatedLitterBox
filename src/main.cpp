@@ -6,7 +6,7 @@
  http://randomnerdtutorials.com/
  
 *****/
-
+#include "credentials.h"
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 //#include "DHT.h"
@@ -18,11 +18,11 @@
 //#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 
 // Change the credentials below, so your ESP8266 connects to your router
-const char* ssid = "add your network here";
-const char* password = "your network password here";
+const char* ssid = "WIFI-SSID";
+const char* password = "WIFI-PASSWD";
 
 // Change the variable to your Raspberry Pi IP address, so it connects to your MQTT broker
-const char* mqtt_server = "add your MQTT broker IP here";
+const char* mqtt_server = "BROKER-IP";
 
 // Initializes the espClient. You should change the espClient name if you have multiple ESPs running in your home automation system
 WiFiClient espClient;
@@ -42,7 +42,7 @@ const int water = 14; // GPIO 14 = D5 to mosfet gate
 // Setup of stepper motor for cat feeder
 const int dir = 2; // GPIO 02 = D4
 const int steps = 0; // GPIO 00 = D3
-int speed = 1500;  //stepper motor rotation speed
+int speed = 2000;  //stepper motor rotation speed
 
 // PIR sensor set up
 boolean lockLow = true;
@@ -114,6 +114,7 @@ void callback(String topic, byte* message, unsigned int length) {
         digitalWrite(steps, LOW);
         delayMicroseconds(speed);
       }
+      digitalWrite(dir, LOW);
     }
     else if(messageTemp == "water"){
         Serial.print("Watering the cat");
